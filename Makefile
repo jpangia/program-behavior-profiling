@@ -4,12 +4,20 @@
 
 VPATH = ./build:./include:./src
 
-BUILD_DIR = ./build
-SRC_DIR = ./src
-INCLUDE_DIR = ./include
+buildDir = ./build
+objDir = ./obj
+srcDir = ./src
+includeDir = ./include
 
-hellomain: $(SRC_DIR)/hellomain.c $(SRC_DIR)/print_hello.c
-	gcc $^ -o $(BUILD_DIR)/hellomain -I$(INCLUDE_DIR)
+.PHONY: all
+all: $(objDir)/print_hello.o $(buildDir)/hellomain
 
+$(objDir)/print_hello.o: $(srcDir)/print_hello.c
+	gcc $^ -c -o $@ -I$(includeDir)
+
+$(buildDir)/hellomain: $(srcDir)/hellomain.c $(objDir)/print_hello.o
+	gcc $^ -o $@ -I$(includeDir)
+
+.PHONY: clean
 clean:
-	rm -f $(BUILD_DIR)/*
+	rm -f $(buildDir)/* $(objDir)/*
