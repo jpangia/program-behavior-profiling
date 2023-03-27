@@ -1,0 +1,5 @@
+--------------------------------------------------------------------------------------
+link: https://github.com/eliben/llvm-clang-samples/blob/master/src_clang/tooling_sample.cpp
+
+this links to a sample code from 2018. Of particular interest is the use of the Rewriter class and its InsertText function
+this code includes (among several others) "clang/Rewrite/Core/Rewriter.h"
