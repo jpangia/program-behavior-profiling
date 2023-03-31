@@ -1,0 +1,7 @@
+This file contains a list of things installed to build this project.
+It will be used later when making the installation guide, dependency instructions, etc.
+
+* build-essential
+* cmake
+
+* installed latest llvm (as of March-April 2023) from https://github.com/llvm/llvm-project

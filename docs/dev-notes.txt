@@ -1,0 +1,21 @@
+--------------------------------------------------------------------------------------
+link: https://github.com/eliben/llvm-clang-samples/blob/master/src_clang/tooling_sample.cpp
+
+this links to a sample code from 2018. Of particular interest is the use of the Rewriter class and its InsertText function
+this code includes (among several others) "clang/Rewrite/Core/Rewriter.h"
+
+--------------------------------------------------------------------------------------
+link: https://github.com/llvm/llvm-project/tree/main/clang/lib/Tooling/Transformer
+this is where clang transformer lives in the llvm github
+
+--------------------------------------------------------------------------------------
+link: https://intel.github.io/llvm-docs/clang/ClangTransformerTutorial.html
+
+"
+Clang Transformer is for developers who want to write clang-tidy checks or write tools to modify a large number of C++ files
+"
+^ so look at clang-tidy
+
+--------------------------------------------------------------------------------------
+my notes:
+include path is "$(path to llvm-project)/clang/include/"
