@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "${workspace}/../../llvm-project/clang/include/*"
+            ],
+            "defines": [],
+            "compilerPath": "/home/jpangia/Documents/spring23/csc766/course-proj/llvm-project/build/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}

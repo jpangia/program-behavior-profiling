@@ -9,6 +9,15 @@ link: https://github.com/llvm/llvm-project/tree/main/clang/lib/Tooling/Transform
 this is where clang transformer lives in the llvm github
 
 --------------------------------------------------------------------------------------
+Clang Setup
+-----------
+link: https://clang.llvm.org/get_started.html
+
+
+--------------------------------------------------------------------------------------
+Clang Transformer tutorial
+--------------------------
+
 link: https://intel.github.io/llvm-docs/clang/ClangTransformerTutorial.html
 
 "
@@ -17,5 +26,29 @@ Clang Transformer is for developers who want to write clang-tidy checks or write
 ^ so look at clang-tidy
 
 --------------------------------------------------------------------------------------
+Clang Docs index
+----------------
+
+link: https://intel.github.io/llvm-docs/clang/index.html#using-clang-as-a-library
+
+https://intel.github.io/llvm-docs/clang/LibTooling.html:
+when writing a tool, the tool is executed by something like: 
+```
+int result = Tool.run(newFrontendActionFactory<clang::SyntaxOnlyAction>().get());
+```
+The above executes a FrontendAction of type SyntaxOnlyAction. You define your own FrontendAction objects 
+by extending FrontendAction or classes that themselves extend FrontendAction
+
+https://clang.llvm.org/docs/RAVFrontendAction.html:
+how to build FrontendActions
+
+left off in https://intel.github.io/llvm-docs/clang/LibTooling.html
+
+--------------------------------------------------------------------------------------
 my notes:
 include path is "$(path to llvm-project)/clang/include/"
+
+run a command like this to dump a clang AST representation of a source file
+clang -Xclang -ast-dump -fsyntax-only -I./include src/print_hello.c
+
+todo: get sample code from https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html running

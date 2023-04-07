@@ -3,9 +3,12 @@
 # this script builds llvm in the folder it is run in
 # TODO: add mechanism to set build location
 
-script_dir= $(pwd)
+script_dir=$(pwd)
 
 # TODO: cd to user-selected llvm install folder
+
+echo "script work in progress; it won't do anything but exit right now"
+exit
 
 git clone --depth=1 https://github.com/llvm/llvm-project.git
 cd llvm-project/
