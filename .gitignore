@@ -3,4 +3,4 @@
 #ignore obj directory
 ./obj/*
 #ignore .vscode
-./.vscode
+./.vscode/*
