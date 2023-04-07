@@ -2,3 +2,5 @@
 ./build/*
 #ignore obj directory
 ./obj/*
+#ignore .vscode
+./.vscode
