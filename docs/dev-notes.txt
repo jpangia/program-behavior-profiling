@@ -42,7 +42,7 @@ by extending FrontendAction or classes that themselves extend FrontendAction
 https://clang.llvm.org/docs/RAVFrontendAction.html:
 how to build FrontendActions
 
-left off in https://intel.github.io/llvm-docs/clang/LibTooling.html
+left off in https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html
 
 --------------------------------------------------------------------------------------
 my notes:
@@ -51,4 +51,6 @@ include path is "$(path to llvm-project)/clang/include/"
 run a command like this to dump a clang AST representation of a source file
 clang -Xclang -ast-dump -fsyntax-only -I./include src/print_hello.c
 
-todo: get sample code from https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html running
+todo: 
+
+https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html

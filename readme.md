@@ -11,7 +11,8 @@ OBJECTIVES:
 
 TODO:
 -----
-- figure out how to access clang tools
+- get sample code from https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html running
+    - having issues with some sort of DT_TEXTREL error at link time
 - use clang transformer to insert print statements into input code and write the code to a new c source file
     - take an input program
     - feed it to clang transformer
