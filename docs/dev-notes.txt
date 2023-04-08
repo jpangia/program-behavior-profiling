@@ -48,12 +48,35 @@ left off in https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html
 link: https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html
 
 gcc reference; looking at -fpic, fuse-ld, etc
+these were irrelevant to the linker errors. see
+
+--------------------------------------------------------------------------------------
+link: https://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html
+under -fpic/fPIC: pic = position independent code
+under -fpie/fPIE: pie = position independent executable
+but this wasn't the cause of the linker errors; the linker errors
+
+--------------------------------------------------------------------------------------
+link: https://stackoverflow.com/questions/59888374/using-clang-as-a-library-in-c-project
+this discussed a setup similar to what I was trying to do with the RAVFrontendAction
+sample code
 
 --------------------------------------------------------------------------------------
 my notes:
+---------
 include path is "$(path to llvm-project)/clang/include/"
 
 run a command like this to dump a clang AST representation of a source file
 clang -Xclang -ast-dump -fsyntax-only -I./include src/print_hello.c
 
 https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html
+
+Linker error: "/usr/bin/ld: warning: creating DT_TEXTREL in a PIE"
+so it looks like I don't want llvm built with PIE?
+
+scratch that: just realized above is a warning. The real problems are that the included files can't find their implementations
+
+the linker errors resulted from missing -lclang flags in the is 
+To solve this, try looking at the functions/source files referenced in the errors and trying to infer what library that function is defined in
+note that llvm-config is a tool that automatically generates the required llvm library -l is
+but there does not appear to be an equivalent for clang

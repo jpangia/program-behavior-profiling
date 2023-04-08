@@ -2,8 +2,6 @@
 # I will fill this later once the project is more underway.
 # currently just learning makefiles so the repo can be well-structured
 
-VPATH = ./build:./include:./src
-
 buildDir = ./build
 objDir = ./obj
 srcDir = ./src
@@ -12,50 +10,56 @@ llvmDir = ../llvm-project
 llvmBuildDir = $(llvmDir)/build
 libDir = $(llvmDir)/build/lib
 
-includeFlags = -I./include \
+
+includeFlags != llvm-config --cxxflags
+includeFlags += -I./include \
 			  -I$(llvmDir)/clang/include \
-			  -I$(llvmDir)/llvm/include \
-			  -I$(llvmDir)/build/include \
 			  -I$(llvmDir)/build/tools/clang/include \
 			  -I$(llvmBuildDir)/tools/clang/include
 
-cxxFlags = -fuse-ld=lld
+# cxxFlags = -fuse-ld=lld
 
-#CLANG_LIBS := -L $(libDir) \
+llvmLibs != llvm-config --ldflags --libs --system-libs
+CLANG_LIBS := \
 	-Wl,--start-group \
+	-lclang \
+	-lclangAnalysis \
+	-lclangARCMigrate \
 	-lclangAST \
 	-lclangASTMatchers \
-	-lclangAnalysis \
 	-lclangBasic \
+	-lclangCodeGen \
+	-lclangCrossTU \
 	-lclangDriver \
 	-lclangEdit \
+	-lclangFormat \
 	-lclangFrontend \
 	-lclangFrontendTool \
+	-lclangIndex \
 	-lclangLex \
 	-lclangParse \
-	-lclangSema \
-	-lclangEdit \
 	-lclangRewrite \
 	-lclangRewriteFrontend \
+	-lclangSema \
+	-lclangSerialization \
 	-lclangStaticAnalyzerFrontend \
 	-lclangStaticAnalyzerCheckers \
 	-lclangStaticAnalyzerCore \
-	-lclangCrossTU \
-	-lclangIndex \
-	-lclangSerialization \
+	-lclangSupport \
 	-lclangToolingCore \
 	-lclangTooling \
-	-lclangFormat \
 	-Wl,--end-group
+
+llvmLibFlags = -L$(libDir) $(CLANG_LIBS) $(llvmLibs)
 
 .PHONY: all
 all: $(objDir)/print_hello.o $(buildDir)/hellomain $(buildDir)/sample-frontend-action
 
 $(objDir)/%.o: $(srcDir)/%.c
-	g++ $^ -c -o $@ $(includeFlags) $(cxxFlags)
+	g++ $^ -c -o $@ -fPIC $(includeFlags) $(llvmLibFlags)
 
 $(buildDir)/%: $(objDir)/%.o
-	g++ $^ -o $@ $(includeFlags) $(cxxFlags)
+	g++ $^ -o $@ -fPIC $(includeFlags) $(llvmLibFlags)
 
 $(objDir)/print_hello.o: $(srcDir)/print_hello.c
 	g++ $^ -c -o $@ $(includeFlags)

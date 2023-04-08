@@ -9,6 +9,9 @@
  *  https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html
  *  trying to execute the program as a standalone tool rather than 
  *  as part of the clang compile process
+ * 
+ * usage: execute a sample run with (from repo root directory):
+ *    `./build/sample-frontend-action "namespace n { namespace m { class C {}; } }"`
 */
 
 #include "clang/AST/ASTConsumer.h"
