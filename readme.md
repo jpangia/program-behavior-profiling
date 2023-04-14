@@ -6,13 +6,19 @@ CURRENTLY WORK_IN_PROGRESS
 
 OBJECTIVES:
 -----------
-1. Build a branch-pointer tracing tool to insert instrumentation code that prints branch trace into the input c source file
+1. Build a branch-pointer tracing tool to insert instrumentation code that prints branch trace into the input C source file
 2. Build an instruction counting tool to output the number of instructions executed by an input program
 
 TODO:
 -----
-- get sample code from https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html running
-    - having issues with some sort of DT_TEXTREL error at link time
+- learn how to:
+    - find branch expressions (might be a generic branch category)
+        - find function calls
+        - find if-else
+        - find switch ?
+        - find loops
+    - get the location line (FullSourceLoc::getSpellingLineNumber() ) and target of the branch
+    - write dictionary file
 - use clang transformer to insert print statements into input code and write the code to a new c source file
     - take an input program
     - feed it to clang transformer
@@ -20,3 +26,14 @@ TODO:
         - add an instrumentation to the branch that outputs the branch id if the branch executes
         - write the branch id, its home source file, its line number, and its target line number to a dictionary file
 - complete build-utils/get-llvm.sh
+
+DONE:
+-----
+- get sample code from https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html running
+    - having issues with some sort of DT_TEXTREL error at link time 
+    - DT_TEXTREL was not actually the issue; see docs/dev-notes for the solution
+
+COMPATIBILITY:
+--------------
+- Developed and tested on Kubuntu 22.04 
+- Expected to work on Ubuntu, but untested

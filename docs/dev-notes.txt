@@ -23,7 +23,7 @@ link: https://intel.github.io/llvm-docs/clang/ClangTransformerTutorial.html
 "
 Clang Transformer is for developers who want to write clang-tidy checks or write tools to modify a large number of C++ files
 "
-^ so look at clang-tidy
+^ so look at clang-tidy (well maybe)
 
 --------------------------------------------------------------------------------------
 Clang Docs index

@@ -53,7 +53,7 @@ CLANG_LIBS := \
 llvmLibFlags = -L$(libDir) $(CLANG_LIBS) $(llvmLibs)
 
 .PHONY: all
-all: $(objDir)/print_hello.o $(buildDir)/hellomain $(buildDir)/sample-frontend-action
+all: $(objDir)/print_hello.o $(buildDir)/hellomain $(buildDir)/sample-frontend-action $(buildDir)/branch-trace
 
 $(objDir)/%.o: $(srcDir)/%.c
 	g++ $^ -c -o $@ -fPIC $(includeFlags) $(llvmLibFlags)
