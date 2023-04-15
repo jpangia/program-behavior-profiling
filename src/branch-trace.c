@@ -29,19 +29,81 @@ public:
   //TODO:
   //implement bool Visit[nodetype](nodetype*) function for each translation unit of interest
   // catch the following nodes:
-  // - if (IfStmt)
-  // - else (ElseStmt)
-  // - while (WhileStmt)
-  // - do-while (DoStmt)
-  // - for (ForStmt)
-  // - switch (SwitchStmt)
+  // + if (IfStmt)
+  // x else (there is no else)
+  // + while (WhileStmt)
+  // + do-while (DoStmt)
+  // + for (ForStmt)
+  // + switch (SwitchStmt)
   // x case (SwitchCase, but this doesn't branch)
-  // - break (BreakStmt)
-  // - continue (ContinueStmt)
-  // - goto (GotoStmt)
+  // + break (BreakStmt)
+  // + continue (ContinueStmt)
+  // + goto (GotoStmt)
   // - indirect goto? (IndirectGotoStmt)
-  // - function call (CallExpr)
-  // - return (ReturnStmt)
+  // + function call (CallExpr)
+  // + return (ReturnStmt)
+
+  bool VisitBreakStmt(BreakStmt* breakStmt)
+  {
+    breakStmt->dump();
+    return true;
+  }
+
+  bool VisitCallExpr(CallExpr* callExpr)
+  {
+    callExpr->dump();
+    return true;
+  }
+
+  bool VisitContinueStmt(ContinueStmt* continueStmt)
+  {
+    continueStmt->dump();
+    return true;
+  }
+
+  bool VisitDoStmt(DoStmt* doStmt)
+  {
+    doStmt->dump();
+    return true;
+  }
+
+  bool VisitForStmt(ForStmt* forStmt)
+  {
+    forStmt->dump();
+    return true;
+  }
+
+  bool VisitGotoStmt(GotoStmt* gotoStmt)
+  {
+    gotoStmt->dump();
+    return true;
+  }
+
+  bool VisitIfStmt(IfStmt* ifStmt)
+  {
+    ifStmt->dump();
+    ifStmt->getElse()->dump();
+    return true;
+  }
+
+  bool VisitReturnStmt(ReturnStmt* returnStmt)
+  {
+    returnStmt->dump();
+    return true;
+  }
+
+  bool VisitSwitchStmt(SwitchStmt* switchStmt)
+  {
+    switchStmt->dump();
+    return true;
+  }
+
+  bool VisitWhileStmt(WhileStmt* whileStmt)
+  {
+    whileStmt->dump();
+    return true;
+  }
+
   bool VisitCXXRecordDecl(CXXRecordDecl *Declaration) 
   {
       Declaration->dump();
@@ -79,6 +141,7 @@ class FindNamedClassAction : public clang::ASTFrontendAction {
 public:
   virtual std::unique_ptr<clang::ASTConsumer> CreateASTConsumer(
     clang::CompilerInstance &Compiler, llvm::StringRef InFile) {
+      printf("FindNamedClassAction::CreateASTConsumer: %s\n", InFile.data()); //debug
     return std::make_unique<FindNamedClassConsumer>(&Compiler.getASTContext());
   }
 };

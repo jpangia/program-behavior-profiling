@@ -54,7 +54,7 @@ these were irrelevant to the linker errors. see
 link: https://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html
 under -fpic/fPIC: pic = position independent code
 under -fpie/fPIE: pie = position independent executable
-but this wasn't the cause of the linker errors; the linker errors
+but this wasn't the cause of the linker errors; see `my notes` section
 
 --------------------------------------------------------------------------------------
 link: https://stackoverflow.com/questions/59888374/using-clang-as-a-library-in-c-project
