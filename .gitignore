@@ -3,6 +3,6 @@
 #ignore obj directory
 ./obj/*
 #ignore .vscode
-./.vscode/*
+./.vscode
 #ignore dictionary.txt
 ./dictionary.txt
