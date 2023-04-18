@@ -11,7 +11,7 @@ OBJECTIVES:
 
 TODO:
 -----
-- examine libtooling/libastmatchers build tutorial; (I may have been barking up the wrong tree this past week....)
+- continue libtooling/libastmatchers build tutorial
 - learn how to:
     - get the location line (FullSourceLoc::getSpellingLineNumber() ) and target line of the branch
     - read in a program
@@ -23,7 +23,9 @@ TODO:
     - whenever it sees a branch:
         - add an instrumentation to the branch that outputs the branch id if the branch executes
         - write the branch id, its home source file, its line number, and its target line number to a dictionary file
+- figure out how to set up building the project (need to copy the code into llvm-project/clang-tools-extra/$dirname)
 - complete build-utils/get-llvm.sh
+
 
 DONE:
 -----
@@ -41,4 +43,4 @@ DONE:
 COMPATIBILITY:
 --------------
 - Developed and tested on Kubuntu 22.04 
-- Expected to work on Ubuntu, but untested
+- Expected to work on Ubuntu, and by extension Debian, but untested

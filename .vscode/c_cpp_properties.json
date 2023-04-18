@@ -5,6 +5,9 @@
             "includePath": [
                 "${default}",
                 "${workspace}/../../llvm-project/clang/include/*",
+                "${workspace}/../../llvm-project/clang/include/clang/*",
+                "${workspace}/../../llvm-project/llvm/include/*",
+                "${workspace}/../../llvm-project/llvm/include/llvm/*",
                 "/usr/include/c++/11",
                 "/usr/include/x86_64-linux-gnu/c++/11"
             ],
