@@ -1,3 +1,6 @@
+This file contains assorted notes written during project development
+
+
 --------------------------------------------------------------------------------------
 link: https://github.com/eliben/llvm-clang-samples/blob/master/src_clang/tooling_sample.cpp
 
@@ -7,6 +10,25 @@ this code includes (among several others) "clang/Rewrite/Core/Rewriter.h"
 --------------------------------------------------------------------------------------
 link: https://github.com/llvm/llvm-project/tree/main/clang/lib/Tooling/Transformer
 this is where clang transformer lives in the llvm github
+
+--------------------------------------------------------------------------------------
+Building tools with LibTooling.LibASTMatchers
+---------------------------------------------
+link: https://intel.github.io/llvm-docs/clang/LibASTMatchersTutorial.html
+
+look at this
+
+--------------------------------------------------------------------------------------
+ASTMatcher
+----------
+link: https://clang.llvm.org/docs/LibASTMatchersReference.html
+
+"
+Node matchers are at the core of matcher expressions - they specify the type of node that is expected. 
+Every match expression starts with a node matcher, which can then be further refined with a narrowing or 
+traversal matcher. All traversal matchers take node matchers as their arguments.
+"
+start with a node matcher, then qualify with traversal and narrowing matchers
 
 --------------------------------------------------------------------------------------
 Clang Setup

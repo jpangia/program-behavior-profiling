@@ -4,3 +4,5 @@
 ./obj/*
 #ignore .vscode
 ./.vscode/*
+#ignore dictionary.txt
+./dictionary.txt

@@ -5,6 +5,7 @@
 buildDir = ./build
 objDir = ./obj
 srcDir = ./src
+
 #the install location of llvm
 llvmDir = ../llvm-project
 llvmBuildDir = $(llvmDir)/build
@@ -48,6 +49,7 @@ CLANG_LIBS := \
 	-lclangSupport \
 	-lclangToolingCore \
 	-lclangTooling \
+	-lclangTransformer \
 	-Wl,--end-group
 
 llvmLibFlags = -L$(libDir) $(CLANG_LIBS) $(llvmLibs)
@@ -56,6 +58,9 @@ llvmLibFlags = -L$(libDir) $(CLANG_LIBS) $(llvmLibs)
 all: $(objDir)/print_hello.o $(buildDir)/hellomain $(buildDir)/sample-frontend-action $(buildDir)/branch-trace
 
 $(objDir)/%.o: $(srcDir)/%.c
+	g++ $^ -c -o $@ -fPIC $(includeFlags) $(llvmLibFlags)
+
+$(objDir)/%.o: $(srcDir)/%.cpp
 	g++ $^ -c -o $@ -fPIC $(includeFlags) $(llvmLibFlags)
 
 $(buildDir)/%: $(objDir)/%.o

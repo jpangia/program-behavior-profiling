@@ -11,14 +11,12 @@ OBJECTIVES:
 
 TODO:
 -----
+- examine libtooling/libastmatchers build tutorial; (I may have been barking up the wrong tree this past week....)
 - learn how to:
-    - find branch expressions (might be a generic branch category)
-        - find function calls
-        - find if-else
-        - find switch ?
-        - find loops
-    - get the location line (FullSourceLoc::getSpellingLineNumber() ) and target of the branch
-    - write dictionary file
+    - get the location line (FullSourceLoc::getSpellingLineNumber() ) and target line of the branch
+    - read in a program
+    - write out a new source file
+    - filter out code from #include directives
 - use clang transformer to insert print statements into input code and write the code to a new c source file
     - take an input program
     - feed it to clang transformer
@@ -32,6 +30,13 @@ DONE:
 - get sample code from https://intel.github.io/llvm-docs/clang/RAVFrontendAction.html running
     - having issues with some sort of DT_TEXTREL error at link time 
     - DT_TEXTREL was not actually the issue; see docs/dev-notes for the solution
+- learn how to:
+    - find branch expressions (might be a generic branch category)
+        - find function calls
+        - find if-else
+        - find switch
+        - find loops
+    - write dictionary file
 
 COMPATIBILITY:
 --------------

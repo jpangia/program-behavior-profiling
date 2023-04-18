@@ -11,15 +11,29 @@
  *  
  * usage: execute a sample run with (from repo root directory):
  *    `./build/sample-frontend-action "namespace n { namespace m { class C {}; } }"`
+ *    `./build/branch-trace "namespace n { namespace m { class C { void myfunc(){if(true){}else{MkX();}} }; } }"`
 */
 
+//clang includes
 #include "clang/AST/ASTConsumer.h"
 #include "clang/AST/RecursiveASTVisitor.h"
 #include "clang/Frontend/CompilerInstance.h"
 #include "clang/Frontend/FrontendAction.h"
 #include "clang/Tooling/Tooling.h"
+#include "clang/Tooling/Transformer/RewriteRule.h"
+#include "clang/Tooling/Transformer/Stencil.h"
+
+//standard C includes
+#include <fstream>
+#include <iostream>
 
 using namespace clang;
+using namespace ast_matchers;
+using namespace transformer;
+
+//TODO: make a cleaner solution than a global variable
+//dictionary file for branches
+std::ofstream* glob_dictFile;
 
 class FindBranchVisitor
   : public RecursiveASTVisitor<FindBranchVisitor> {
@@ -82,7 +96,7 @@ public:
   bool VisitIfStmt(IfStmt* ifStmt)
   {
     ifStmt->dump();
-    ifStmt->getElse()->dump();
+    (*glob_dictFile) << "found an if" << std::endl;
     return true;
   }
 
@@ -106,6 +120,11 @@ public:
 
   bool VisitCXXRecordDecl(CXXRecordDecl *Declaration) 
   {
+      printf("oink\n");
+      makeRule(functionDecl(hasName("MkX")).bind("fun"),
+         noopEdit(node("fun")),
+         cat("The name ``MkX`` is not allowed for functions; please rename"));
+      printf("oink\n");
       Declaration->dump();
       FullSourceLoc FullLocation = Context->getFullLoc(Declaration->getBeginLoc());
       printf("hasManager:%d\n", FullLocation.hasManager());
@@ -148,6 +167,9 @@ public:
 
 int main(int argc, char **argv) {
   if (argc > 1) {
+    glob_dictFile = new std::ofstream("dictionary.txt", std::ofstream::out);
     clang::tooling::runToolOnCode(std::make_unique<FindNamedClassAction>(), argv[1]);
+    glob_dictFile->close();
+    delete(glob_dictFile);
   }
 }
