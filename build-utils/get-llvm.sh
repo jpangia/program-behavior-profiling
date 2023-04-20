@@ -5,7 +5,7 @@
 
 script_dir=$(pwd)
 #uncomment to use the ninja build system (recommended)
-ninja=true
+#ninja=true
 # TODO: cd to user-selected llvm install folder
 
 echo "script work in progress; it won't do anything but exit right now"
@@ -16,6 +16,7 @@ cd llvm-project/
 mkdir build
 cd build/
 
+#TODO: remove the if-else and just remove the ninja stuff
 if [ $ninja ]
 then
     #cmake -G Ninja ../llvm -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DLLVM_BUILD_TESTS=ON  # Enable tests; default is off.
