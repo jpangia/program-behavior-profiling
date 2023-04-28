@@ -10,10 +10,13 @@
  *      [TODO]
  *
  * usage:
- *      $path/branch-track [path to input] --
+ *      $path/branch-track <path to input> --
  * sample usage:
  *      ./bin/branch-track ../../program-behavior-profiling/sample-code/simpleFor/simpleFor.c  --
- *  IMPORTANT: must have the -- as the final argument, otherwise the program attempts to process the standard include headers
+ *  IMPORTANT: must have the -- as the final argument, otherwise the program attempts to process the standard include headers.
+ *              Either the program fails because it doesn't have root permissions, or it actually edits those files
+ *              Either outcome would be bad. Best to not run this as root.
+ * 
 */
 
 //clang includes
@@ -410,6 +413,7 @@ int main(int argc, const char** argv)
 {
     std::ofstream outputFile;
     std::string outFileName;
+    std::string dictFileName = "";
     // check if an output file is passed after the --
     // if so, create the output stream
     if(argc >=4)
@@ -421,24 +425,22 @@ int main(int argc, const char** argv)
             llvm::errs() << outFileName << " was not good!";
             return 1;
         }
+
+        if(argc >= 5)
+        {
+            dictFileName = argv[4];
+        }
     }
 
-    printf("argc: %d\n", argc);
     //create the optionsparser for the ClangTool
     auto ExpectedParser = CommonOptionsParser::create(argc, argv, MyToolCategory);
     if(!ExpectedParser)
     {
         //quit because couldn't get the options
-        llvm::errs() << ExpectedParser.takeError();
+        llvm::errs() << "usage: branch-track <path to input C source file> -- "
+                     << "[path to file to write instrumented C file to]";
         return 1;
     }
-
-    //debug
-    for(int i = 0; i < argc; ++i)
-    {
-        printf("argv[%d]: %s\n", i, argv[i]);
-    }
-    printf("argc: %d\n", argc);
 
     CommonOptionsParser& OptionsParser = ExpectedParser.get();
     ClangTool Tool(OptionsParser.getCompilations(),
@@ -513,9 +515,16 @@ int main(int argc, const char** argv)
     Finder.addMatcher(ReturnMatcher, &Tracker);
     // Finder.addMatcher(translationUnitDecl().bind("translationUnitDecl"), &Tracker);
 
-
-    //create the dictionary file
-    glob_dictFile = new std::ofstream("dictionary.txt", std::ofstream::out);
+    //create the dictionary file, using a passed file path, if specified
+    if(dictFileName.length() > 0)
+    {
+        glob_dictFile = new std::ofstream(dictFileName, std::ofstream::out);
+    }
+    else
+    {
+        glob_dictFile = new std::ofstream("dictionary.txt", std::ofstream::out);
+    }
+    
     //run the tool
     Tool.run(newFrontendActionFactory(&Finder).get());
 

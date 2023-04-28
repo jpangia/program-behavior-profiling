@@ -40,23 +40,41 @@ ninja
 3. Copy the directory `$path_to_repo/program-behavior-profiling/src/branch-track` and its contents into `$path_to_llvm/llvm-project/clang-tools-extra/`
     There should now be a new directory `$path_to_llvm/llvm-project/clang-tools-extra/branch-track` containing `BranchTrack.cpp` and `CMakeLists.txt`
 
-4. change directory into `$path_to_llvm/llvm-project/clang-tools-extra/branch-track`
+4. change directory into `$path_to_llvm/llvm-project/clang-tools-extra`
 
-5. in the `branch-track` directory, run 
+5. add the line "add_subdirectory(branch-track")" to the `CMakeLists.txt` file in `clang-tools-extra`
+quick commandline way:
+```console
+echo 'add_subdirectory(branch-track)' >> CMakeLists.txt
+```
+
+6. change directory to `$path_to_llvm/llvm-project/build` and run:
 ```console
 ninja
 ```
+There should be one warning about an unused variable. You can ignore this.
 
-6. There should be a binary `branch-track` in `$path_to_llvm/llvm-project/build/bin`. If so, installation is complete, if not, something went wrong.
+7. There should be a binary `branch-track` in `$path_to_llvm/llvm-project/build/bin`. If so, installation is complete, if not, something went wrong.
 
 # USAGE:
 Run the branch trace tool like below:
 ```console
-$path_to_llvm/llvm-project/build/bin/branch-track <path to input C source file> -- [path to file to write instrumented C file to]
+$path_to_llvm/llvm-project/build/bin/branch-track <path to input C source file> -- [path to file to write instrumented C file to [path to file to dump dictionary to]]
 ```
-IMPORTANT: don't forget the `--` in the command. Clang behaves funny without it.
+IMPORTANT: don't forget the `--` in the command. Clang behaves funny without it, and the program may either fail, or attempt to modify standard C include files. As a related precaution, avoid running this program with root privileges whenever possible
 
-Specifying the input file is mandatory, specifying the file to write output to is optional.
+Specifying the input file is mandatory, specifying the file to write output to is optional. Only one file may be processed at a time.
+
+If the output file is specified, a dictionary file can also be specified. This dictionary file gives information on the branches as following:
+```
+branch n <source file branch lives in> <line branch originates from> <line branch goes to>
+```
+note: the source file is written with all the path information with which it was passed to the `branch-track` binary.
+
+for example, the second branch which goes from line 5 to line 18 in a source file simpleMain.c would look as follows
+```
+branch 2 simpleMain.c 5 18
+```
 
 If no output destination is specified, the file is written to stdout.
 
