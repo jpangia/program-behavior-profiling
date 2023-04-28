@@ -43,6 +43,7 @@ ninja
 4. change directory into `$path_to_llvm/llvm-project/clang-tools-extra`
 
 5. add the line `add_subdirectory(branch-track)` to the `CMakeLists.txt` file in `clang-tools-extra`
+
 quick commandline way:
 ```console
 echo 'add_subdirectory(branch-track)' >> CMakeLists.txt
