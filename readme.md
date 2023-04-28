@@ -40,14 +40,14 @@ ninja
 ```
 (building llvm may take several hours, depending on system specs)
 
-3. Copy the directory $path_to_repo/program-behavior-profiling/src/branch-track and its contents into $path_to_llvm/llvm-project/clang-tools-extra/
-    There should now be a new directory $path_to_llvm/llvm-project/clang-tools-extra/branch-track containing BranchTrack.cpp and CMakeLists.txt
+3. Copy the directory `$path_to_repo/program-behavior-profiling/src/branch-track` and its contents into `$path_to_llvm/llvm-project/clang-tools-extra/`
+    There should now be a new directory `$path_to_llvm/llvm-project/clang-tools-extra/branch-track` containing `BranchTrack.cpp` and `CMakeLists.txt`
 
-4. change directory into $path_to_llvm/llvm-project/clang-tools-extra/branch-track
+4. change directory into `$path_to_llvm/llvm-project/clang-tools-extra/branch-track`
 
 5. run `ninja` again
 
-6. There should be a binary branch-track in $path_to_llvm/llvm-project/build/bin. If so, installation is complete, if not, something went wrong.
+6. There should be a binary branch-track in `$path_to_llvm/llvm-project/build/bin`. If so, installation is complete, if not, something went wrong.
 
 USAGE:
 ------
@@ -56,7 +56,9 @@ Run the branch trace tool like below:
 $path_to_llvm/llvm-project/build/bin/branch-track <path to input C source file> -- [path to file to write instrumented C file to]
 ```
 IMPORTANT: don't forget the `--` in the command. Clang behaves funny without it.
+
 Specifying the input file is mandatory, specifying the file to write output to is optional.
+
 If no output destination is specified, the file is written to stdout.
 
 Compile the resultant instrumented code with your favorite C compiler (tested with gcc).
@@ -73,8 +75,8 @@ NOTES & ASSUMPTIONS:
 
 TESTING:
 --------
-Sample source files are provided in the /sample-code folder.
-The originals are $name.c, the expected outputs are $name.expected.c
+Sample source files are provided in the `/sample-code` folder.
+The originals are `$name.c`, the expected outputs are `$name.expected.c`
 
 COMPATIBILITY:
 --------------
