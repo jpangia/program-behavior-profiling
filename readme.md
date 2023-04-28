@@ -48,7 +48,7 @@ Assuming the current working directory is the directory you want to install llvm
 USAGE:
 ------
 Run the branch trace tool like below:
-`$path_to_llvm/llvm-project/build/bin/branch-track <path to input C source file> -- [path to file to write instrumented C file to]`
+```$path_to_llvm/llvm-project/build/bin/branch-track <path to input C source file> -- [path to file to write instrumented C file to]
 IMPORTANT: don't forget the `--` in the command. Clang behaves funny without it.
 Specifying the input file is mandatory, specifying the file to write output to is optional.
 If no output destination is specified, the file is written to stdout.
@@ -56,7 +56,7 @@ If no output destination is specified, the file is written to stdout.
 Compile the resultant instrumented code with your favorite C compiler (tested with gcc).
 
 Run the instruction counter like below:
-`$path_to_repo/utils/ins-count.sh <path to input program> [arguments for the program]`
+```$path_to_repo/utils/ins-count.sh <path to input program> [arguments for the program]
 
 NOTES & ASSUMPTIONS:
 --------------------
