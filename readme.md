@@ -45,7 +45,10 @@ ninja
 
 4. change directory into `$path_to_llvm/llvm-project/clang-tools-extra/branch-track`
 
-5. run `ninja` again
+5. in the `branch-track` directory, run 
+```console
+ninja
+```
 
 6. There should be a binary branch-track in `$path_to_llvm/llvm-project/build/bin`. If so, installation is complete, if not, something went wrong.
 
