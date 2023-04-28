@@ -24,16 +24,20 @@ Ensure the following packages (for Ubuntu) are installed before attempting insta
 INSTALLATION:
 -------------
 1. Clone this repository with: 
-`git clone https://github.com/jpangia/program-behavior-profiling`
+```console
+git clone https://github.com/jpangia/program-behavior-profiling
+```
 
 2. Install llvm in a directory of your choice, (using a shallow clone to speed up the download)
 Assuming the current working directory is the directory you want to install llvm in, execute the following:
-`git clone --depth=1 https://github.com/llvm/llvm-project.git`
-`cd llvm-project/`
-`mkdir build`
-`cd build/`
-`cmake -G Ninja ../llvm -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DLLVM_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release`
-`ninja`
+```console
+git clone --depth=1 https://github.com/llvm/llvm-project.git
+cd llvm-project/
+mkdir build
+cd build/
+cmake -G Ninja ../llvm -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DLLVM_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release
+ninja
+```
 (building llvm may take several hours, depending on system specs)
 
 3. Copy the directory $path_to_repo/program-behavior-profiling/src/branch-track and its contents into $path_to_llvm/llvm-project/clang-tools-extra/
@@ -48,7 +52,9 @@ Assuming the current working directory is the directory you want to install llvm
 USAGE:
 ------
 Run the branch trace tool like below:
-```$path_to_llvm/llvm-project/build/bin/branch-track <path to input C source file> -- [path to file to write instrumented C file to]
+```console
+$path_to_llvm/llvm-project/build/bin/branch-track <path to input C source file> -- [path to file to write instrumented C file to]
+```
 IMPORTANT: don't forget the `--` in the command. Clang behaves funny without it.
 Specifying the input file is mandatory, specifying the file to write output to is optional.
 If no output destination is specified, the file is written to stdout.
@@ -56,7 +62,9 @@ If no output destination is specified, the file is written to stdout.
 Compile the resultant instrumented code with your favorite C compiler (tested with gcc).
 
 Run the instruction counter like below:
-```$path_to_repo/utils/ins-count.sh <path to input program> [arguments for the program]
+```console
+$path_to_repo/utils/ins-count.sh <path to input program> [arguments for the program]
+```
 
 NOTES & ASSUMPTIONS:
 --------------------
