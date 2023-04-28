@@ -84,6 +84,28 @@ this discussed a setup similar to what I was trying to do with the RAVFrontendAc
 sample code
 
 --------------------------------------------------------------------------------------
+link: https://www.llvm.org/docs/WritingAnLLVMPass.html
+plan D
+--------------------------------------------------------------------------------------
+link: https://valgrind.org/docs/manual/quick-start.html
+valgrind quick start
+
+--------------------------------------------------------------------------------------
+link: https://valgrind.org/docs/manual/cg-manual.html
+cachegrind manual
+
+"
+Cachegrind gathers . . . 
+I cache reads (Ir, which equals the number of instructions executed)
+"
+
+count instructions by doing:
+`valgrind --tool=cachegrind <executable> [executable args]`
+add `--cachegrind-out-file=/dev/null` between --tool=XXX and executable to suppress log file
+line " I   refs:       [number]" gives number of instructions
+
+
+--------------------------------------------------------------------------------------
 my notes:
 ---------
 include path is "$(path to llvm-project)/clang/include/"
@@ -102,3 +124,9 @@ the linker errors resulted from missing -lclang flags in the is
 To solve this, try looking at the functions/source files referenced in the errors and trying to infer what library that function is defined in
 note that llvm-config is a tool that automatically generates the required llvm library -l is
 but there does not appear to be an equivalent for clang
+
+Rewriter class overwrites too much.
+now that I understand Rewriter a little bit, i'm revisiting rewritersample.cpp from the 2018 github
+current issue: it's not reognizing stdio; probably try to plug it into getCompilations and the Tool somehow
+
+use cachegrind tool in valgrind

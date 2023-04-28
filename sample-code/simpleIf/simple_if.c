@@ -8,7 +8,13 @@
 
 
 int main(int argc, char** argv)
-{
+{   
+    do
+    {
+        printf("oink\n");
+        continue;
+    } while (0);
+    
     //check the commandline args
     if(argc != 2)
     {

@@ -1,4 +1,0 @@
-#ignore everything but the gitignore
-#used to keep this empty folder in the repository to simplify the build process
-*
-!.gitignore
