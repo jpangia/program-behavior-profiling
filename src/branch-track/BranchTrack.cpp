@@ -425,7 +425,7 @@ int main(int argc, const char** argv)
         outputFile = std::ofstream(outFileName, std::ofstream::out);
         if(!outputFile.good())
         {
-            llvm::errs() << outFileName << " was not good!";
+            llvm::errs() << outFileName << " was not good!\n";
             return 1;
         }
 
@@ -441,7 +441,7 @@ int main(int argc, const char** argv)
     {
         //quit because couldn't get the options
         llvm::errs() << "usage: branch-track <path to input C source file> -- "
-                     << "[path to file to write instrumented C file to [path to file to dump dictionary to]]";
+                     << "[path to file to write instrumented C file to [path to file to dump dictionary to]]\n";
         return 1;
     }
 
@@ -507,9 +507,9 @@ int main(int argc, const char** argv)
     StatementMatcher SwitchMatcher = switchStmt().bind("switchStmt");
     StatementMatcher BreakMatcher = breakStmt().bind("breakStmt");
     StatementMatcher ContinueMatcher = continueStmt().bind("continueStmt");
-    StatementMatcher GotoMatcher = gotoStmt().bind("gotoStmt");
+    // StatementMatcher GotoMatcher = gotoStmt().bind("gotoStmt"); //currently unimplemented
     StatementMatcher CallExpr = callExpr().bind("callExpr");
-    StatementMatcher ReturnMatcher = returnStmt().bind("returnStmt");
+    // StatementMatcher ReturnMatcher = returnStmt().bind("returnStmt"); //currently unimplemented
 
     BranchTracker Tracker;
     MatchFinder Finder;
@@ -521,17 +521,19 @@ int main(int argc, const char** argv)
     Finder.addMatcher(SwitchMatcher, &Tracker);
     Finder.addMatcher(BreakMatcher, &Tracker);
     Finder.addMatcher(ContinueMatcher, &Tracker);
-    Finder.addMatcher(GotoMatcher, &Tracker);
+    // Finder.addMatcher(GotoMatcher, &Tracker); //currently unimplemented
     Finder.addMatcher(CallExpr, &Tracker);
-    Finder.addMatcher(ReturnMatcher, &Tracker);
+    // Finder.addMatcher(ReturnMatcher, &Tracker); //currently unimplemented
 
     //create the dictionary file, using a passed file path, if specified
     if(dictFileName.length() > 0)
     {
+        llvm::outs() << "writing dictionary to " << dictFileName << "\n";
         glob_dictFile = new std::ofstream(dictFileName, std::ofstream::out);
     }
     else
     {
+        llvm::outs() << "writing dictionary to dictionary.txt \n";
         glob_dictFile = new std::ofstream("dictionary.txt", std::ofstream::out);
     }
     
@@ -539,8 +541,8 @@ int main(int argc, const char** argv)
     int ret = Tool.run(newFrontendActionFactory(&Finder).get());
     if(ret != 0)
     {
-        llvm::errs() << "ClangTool failed!";
-        llvm::errs() << "Perhaps the input source file doesn't exist?";
+        llvm::errs() << "ClangTool failed!\n";
+        llvm::errs() << "Perhaps the input source file doesn't exist?\n";
         return 1;
     }
 
@@ -550,7 +552,7 @@ int main(int argc, const char** argv)
         glob_Rewriter.getRewriteBufferFor(SourceMgr.getMainFileID());
     if(outputFile.is_open())
     {
-        llvm::outs() << "wrote to " << outFileName;
+        llvm::outs() << "wrote to " << outFileName << "\n";
         outputFile << std::string(RewriteBuf->begin(), RewriteBuf->end());
     }
     else
