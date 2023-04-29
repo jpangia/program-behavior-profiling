@@ -441,7 +441,7 @@ int main(int argc, const char** argv)
     {
         //quit because couldn't get the options
         llvm::errs() << "usage: branch-track <path to input C source file> -- "
-                     << "[path to file to write instrumented C file to]";
+                     << "[path to file to write instrumented C file to [path to file to dump dictionary to]]";
         return 1;
     }
 
@@ -498,7 +498,6 @@ int main(int argc, const char** argv)
         SourceMgr.createFileID(FileIn.get(), SourceLocation(), SrcMgr::C_User));
     TheCompInst.getDiagnosticClient().BeginSourceFile(
         TheCompInst.getLangOpts(), &TheCompInst.getPreprocessor());
-    printf("oink1\n"); //debug
 
     //create the matchers
     StatementMatcher IfMatcher = ifStmt().bind("ifStmt");

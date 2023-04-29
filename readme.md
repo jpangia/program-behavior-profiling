@@ -86,8 +86,9 @@ Compile the resultant instrumented code with your favorite C compiler (tested wi
 
 Run the instruction counter like below:
 ```console
-$path_to_repo/utils/ins-count.sh <path to input program> [arguments for the program]
+$path_to_repo/utils/ins-count.sh <relative path to input program> [arguments for the program]
 ```
+note: the path to the input program must be relative, otherwise you will get a file not found from valgrind
 
 # NOTES & ASSUMPTIONS:
 - branch-track instruments its input source code by inserting fprintf calls to print to stderr. If the input source cannot call fprintf, this tool will not be able to work

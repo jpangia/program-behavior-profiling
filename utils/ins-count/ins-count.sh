@@ -5,7 +5,7 @@
 if ! test -x "$1"
 then
     echo "executable \`$1\` not found"
-    echo "usage: ins-count <path to executable> [arguments to executable]"
+    echo "usage: ins-count <relative path to executable> [arguments to executable]"
     exit
 fi
 
