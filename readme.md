@@ -75,7 +75,7 @@ branch n <source file branch lives in> <line branch originates from> <line branc
 ```
 note: the source file is written with all the path information with which it was passed to the `branch-track` binary.
 
-for example, the second branch which goes from line 5 to line 18 in a source file simpleMain.c would look as follows
+for example, The below line would describe the second branch that is recorded for an input. It lives in the source file `simpleMain.c`, at line 5, and jumps to line 18
 ```
 branch 2 simpleMain.c 5 18
 ```
@@ -96,8 +96,8 @@ note: the path to the input program must be relative, otherwise you will get a f
 
 # TESTING:
 Sample source files are provided in the `/sample-code` folder.
-The originals are `$name.c`, the expected outputs are `$name.expected.c`
+The originals are `$name.c`, the expected outputs are `$name.expected.c`. A `$name-dict.txt` file is also included that describes the branches for the associated sample case
 
 # COMPATIBILITY:
 - Developed and tested on Kubuntu 22.04 
-- Expected to work on Ubuntu, and by extension Debian, but untested
+- Tested on Ubuntu 22.04 LTS
