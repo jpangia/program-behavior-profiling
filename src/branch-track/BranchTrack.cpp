@@ -1,22 +1,24 @@
 /**
  * Author: James Pangia
  *
- * Description:
- *      example material taken from the following:
- *          https://intel.github.io/llvm-docs/clang/LibASTMatchersTutorial.html
- *          https://github.com/eliben/llvm-clang-samples/blob/master/src_clang/rewritersample.cpp
- *
  * Purpose:
- *      [TODO]
+ *      Accepts a C source file as an input, and instruments the file to print its branch-pointer trace to stderr.
+ *      Also writes a dictionary file containing branch metadata.
+ *      Can optionally specify what file to write the instrumented output code to and where to write the dictionary
+ *      Writes the instrumented code to stdout and the dictionary to dictionary.txt if no files specified
  *
  * usage:
- *      $path/branch-track <path to input> --
+ *      $path/branch-track <path to input C source file> -- [path to file to write instrumented C file to [path to file to dump dictionary to]]
  * sample usage:
- *      ./bin/branch-track ../../program-behavior-profiling/sample-code/simpleFor/simpleFor.c  --
+ *      ./bin/branch-track ../../program-behavior-profiling/sample-code/simpleFor/simpleFor.c  -- simpleFor.c.out simpleFor-dict.txt
  *  IMPORTANT: must have the -- as the final argument, otherwise the program attempts to process the standard include headers.
  *              Either the program fails because it doesn't have root permissions, or it actually edits those files
  *              Either outcome would be bad. Best to not run this as root.
  * 
+ * Notes:
+ *      example material taken from the following:
+ *          https://intel.github.io/llvm-docs/clang/LibASTMatchersTutorial.html
+ *          https://github.com/eliben/llvm-clang-samples/blob/master/src_clang/rewritersample.cpp
 */
 
 //clang includes
@@ -37,6 +39,7 @@
 
 //llvm includes
 #include "llvm/Support/CommandLine.h" //for llvm::cl::extrahelp
+#include "llvm/Support/ErrorOr.h" //for llvm::error_code
 #include "llvm/TargetParser/Host.h"
 
 //regular includes
@@ -326,7 +329,7 @@ public:
         }
 
         // catch goto
-        if(const clang::GotoStmt* GS = Result.Nodes.getNodeAs<clang::GotoStmt>("gotoStmt"))
+        if(/*const clang::GotoStmt* GS = */Result.Nodes.getNodeAs<clang::GotoStmt>("gotoStmt"))
         {
             fprintf(stderr, "currently unimplemented\n");
         }
@@ -477,16 +480,25 @@ int main(int argc, const char** argv)
     SourceManager &SourceMgr = TheCompInst.getSourceManager();
     TheCompInst.createPreprocessor(TU_Module);
     TheCompInst.createASTContext();
-
+    
     // A Rewriter helps us manage the code rewriting task.
     glob_Rewriter.setSourceMgr(SourceMgr, TheCompInst.getLangOpts());
 
     // Set the main file handled by the source manager to the input file.
     llvm::ErrorOr<const FileEntry*> FileIn = FileMgr.getFile(argv[1]);
+    
+    //ensure a correct file name was given
+    if(auto e = FileIn.getError())
+    {
+        llvm::errs() << "Error: " << e.message();
+        return 1;
+    }
+
     SourceMgr.setMainFileID(
         SourceMgr.createFileID(FileIn.get(), SourceLocation(), SrcMgr::C_User));
     TheCompInst.getDiagnosticClient().BeginSourceFile(
         TheCompInst.getLangOpts(), &TheCompInst.getPreprocessor());
+    printf("oink1\n"); //debug
 
     //create the matchers
     StatementMatcher IfMatcher = ifStmt().bind("ifStmt");
@@ -513,7 +525,6 @@ int main(int argc, const char** argv)
     Finder.addMatcher(GotoMatcher, &Tracker);
     Finder.addMatcher(CallExpr, &Tracker);
     Finder.addMatcher(ReturnMatcher, &Tracker);
-    // Finder.addMatcher(translationUnitDecl().bind("translationUnitDecl"), &Tracker);
 
     //create the dictionary file, using a passed file path, if specified
     if(dictFileName.length() > 0)
@@ -526,7 +537,13 @@ int main(int argc, const char** argv)
     }
     
     //run the tool
-    Tool.run(newFrontendActionFactory(&Finder).get());
+    int ret = Tool.run(newFrontendActionFactory(&Finder).get());
+    if(ret != 0)
+    {
+        llvm::errs() << "ClangTool failed!";
+        llvm::errs() << "Perhaps the input source file doesn't exist?";
+        return 1;
+    }
 
     // At this point the rewriter's buffer should be full with the rewritten
     // file contents.

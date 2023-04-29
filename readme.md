@@ -26,6 +26,7 @@ git clone https://github.com/jpangia/program-behavior-profiling
 ```
 
 2. Install llvm in a directory of your choice, (using a shallow clone to speed up the download)
+
 Assuming the current working directory is the directory you want to install llvm in, execute the following:
 ```console
 git clone --depth=1 https://github.com/llvm/llvm-project.git
@@ -66,7 +67,9 @@ IMPORTANT: don't forget the `--` in the command. Clang behaves funny without it,
 
 Specifying the input file is mandatory, specifying the file to write output to is optional. Only one file may be processed at a time.
 
-If the output file is specified, a dictionary file can also be specified. This dictionary file gives information on the branches as following:
+If the output file is specified, a dictionary file can also be specified. If no dictionary file is specified, then the information will be written to `$path_to_llvm/llvm-project/build/bin/dictionary.txt`, overwriting any previous data in the file.
+
+This dictionary file gives information on the branches as following:
 ```
 branch n <source file branch lives in> <line branch originates from> <line branch goes to>
 ```

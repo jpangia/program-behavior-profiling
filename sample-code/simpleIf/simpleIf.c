@@ -8,25 +8,25 @@
 
 
 int main(int argc, char** argv)
-{
+{   
     //check the commandline args
-    if(argc != 2) //br
+    if(argc != 2)
     {
-        printf("usage: ./simple_if <number>\n"); //br?
-        return 1; //br?
+        printf("usage: ./simple_if <number>\n");
+        return 1;
     }
 
     int num = 0;
 
-    sscanf(argv[1], "%d", &num); //br?
+    sscanf(argv[1], "%d", &num);
 
-    if(num % 2 == 0) //br
+    if(num % 2 == 0)
     {
-        printf("%d is even\n", num); //br?
+        printf("%d is even\n", num);
     }
-    else //br
+    else
     {
-        printf("%d is odd\n", num); //br?
+        printf("%d is odd\n", num);
     }
 
 

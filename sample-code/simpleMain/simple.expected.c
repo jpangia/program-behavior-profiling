@@ -6,5 +6,6 @@
 int main()
 {
     printf("hello world\n");
+fprintf(stderr, "function %p\n", &printf);
     return 0;
 }

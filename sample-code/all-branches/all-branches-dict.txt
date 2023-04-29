@@ -1,0 +1,12 @@
+branch 1 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 11, 12
+branch 2 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 11, 17
+branch 3 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 30, 23
+branch 4 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 30, 30
+branch 5 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 34, 35
+branch 6 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 34, 42
+branch 7 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 44, 45
+branch 8 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 44, 47
+branch 9 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 26, 27
+branch 10 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 28, 30
+branch 11 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 37, 38
+branch 12 ../../program-behavior-profiling/sample-code/all-branches/all-branches.c, 39, 34

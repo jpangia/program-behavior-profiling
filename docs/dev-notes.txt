@@ -1,4 +1,4 @@
-This file contains assorted notes written during project development
+This file contains assorted notes written during project development. Mostly jumbled notes, but left in in case somebody finds it useful
 
 
 --------------------------------------------------------------------------------------
