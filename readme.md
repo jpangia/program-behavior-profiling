@@ -1,8 +1,8 @@
 Originally written for North Carolina State University class CSC 766: Code Optimization for Scalar and Parallel Programs in Spring 2023
+---
 
---------------------------
-CURRENTLY WORK_IN_PROGRESS
---------------------------
+# COMPLETENESS STATE:
+The branch-trace tool is only guaranteed to run correctly on programs that are self-contained in a single file. If the input program #includes external headers, particularly external headers that define macros, the `branch-trace` is likely to fail.
 
 # OBJECTIVES:
 1. Build a branch-pointer tracing tool to insert branch-pointer instrumentation code into the input C source file
@@ -54,7 +54,7 @@ echo 'add_subdirectory(branch-track)' >> CMakeLists.txt
 ```console
 ninja
 ```
-There should be one warning about an unused variable. You can ignore this.
+There might be one warning about an unused variable. You can ignore this.
 
 7. There should be a binary `branch-track` in `$path_to_llvm/llvm-project/build/bin`. If so, installation is complete, if not, something went wrong.
 
